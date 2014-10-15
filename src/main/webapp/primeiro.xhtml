@@ -4,12 +4,24 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
 
-	<h1>Meu primeiro exemplo JSF</h1>
+<ui:composition template="/estrutura.xhtml">
+		<ui:param name="titulo" value="Minha primeira pagina JSF ... agora com Facelets Templates" />		
+		<h1>Meu primeiro exemplo JSF</h1>
+	
+	<ui:define name="direita">
+		<h:messages infoClass="info" errorClass="erro" warnClass="warn" fatalClass="fatal" />
+	</ui:define>
 
-	Sabe o que o bean tem a dizer?
-	#{x.ola}
-<h:form>
-Usando a tag link
+Sabe o que o bean tem a dizer?  
+		<h:outputText value="#{x.ola}" />
+
+		<h:form>
+				Link para o meu Blog 
+				<h:outputLink value="http://www.melissalobo.blogspot.com.br">Tornando-se um desenvolvedor</h:outputLink>
+		
+				Usando a tag link
 			<h:link outcome="cadastropessoas.jsf" value="Chamando o cadastro de Pessoas"/>
-</h:form>
+		</h:form>
+	
+	</ui:composition>
 </html>
