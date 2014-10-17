@@ -3,11 +3,14 @@ package beans;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 
 import modelo.Pessoa;
 import modelo.PessoaFisica;
@@ -23,8 +26,6 @@ public class CadastroPessoasBean {
 	
 	public CadastroPessoasBean() {
 		lista = new ArrayList<Pessoa>();
-		pessoaSelecionada = new PessoaFisica();
-		
 		for (int x = 0; x < 10; x++) {
 			Pessoa p = (x%2==0) ? new PessoaFisica() : new PessoaJuridica();
 			p.setNome(String.format("Fulano %02d", x));
@@ -34,6 +35,7 @@ public class CadastroPessoasBean {
 			lista.add(p);
 		}
 	}
+	
 	public void criar() {
 		FacesContext contexto = FacesContext.getCurrentInstance();
 		if (tipoNovaPessoa == null) {
@@ -67,7 +69,7 @@ public class CadastroPessoasBean {
 	public void excluir() {
 		lista.remove(pessoaSelecionada);
 		pessoaSelecionada = null;
-		String mensagem = ResourceBundle.getBundle("bundles.mensagens", 
+		String mensagem = ResourceBundle.getBundle("bundles.mensagens",
 				FacesContext.getCurrentInstance().getExternalContext().getRequestLocale()
 		).getString("excluida");
 		
@@ -107,5 +109,13 @@ public class CadastroPessoasBean {
 
 	public boolean isPessoaJuridicaSelecionada() {
 		return pessoaSelecionada instanceof PessoaJuridica;
+	}
+	
+	public void ouvinteAjax(AjaxBehaviorEvent event) {
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AJAX " + event.getPhaseId());
+	}
+
+	public void ouvinteAjax(ValueChangeEvent event) {
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AJAX VALUE CHANGE ");
 	}
 }

@@ -40,10 +40,9 @@ public class GeralBean {
 		if (l != null) {
 			locale = l;
 		}
-		
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 	}
-
+	
 	public Locale getLocale() {
 		return locale;
 	}
